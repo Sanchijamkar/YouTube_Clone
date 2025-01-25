@@ -1,12 +1,9 @@
 🎥 YouTube Clone
 ================
 
-# 🚀 Demo Video
+# 🚀 Demo Video  
 
-<video width="100%" controls>  
-  <source src="https://res.cloudinary.com/dh3mvhvpp/video/upload/v1737743374/jg1amp3mkvcpkieyggdk.mp4" type="video/mp4">  
-   
-</video>  
+[![Watch the Demo](https://via.placeholder.com/800x400?text=Watch+Demo+Video)](https://res.cloudinary.com/dh3mvhvpp/video/upload/v1737743374/jg1amp3mkvcpkieyggdk.mp4)  
 
 
 A feature-rich **YouTube Clone** application built using the **MERNstack** (MongoDB, Express.js, React, and Node.js)
