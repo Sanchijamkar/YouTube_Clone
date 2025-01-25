@@ -3,7 +3,7 @@
 
 # 🚀 Demo Video  
 
-[![Watch the Demo](https://via.placeholder.com/800x400?text=Watch+Demo+Video)](https://res.cloudinary.com/dh3mvhvpp/video/upload/v1737743374/jg1amp3mkvcpkieyggdk.mp4)  
+[![Watch the Demo](https://wallpaperaccess.com/full/8901669.jpg)](https://res.cloudinary.com/dh3mvhvpp/video/upload/v1737743374/jg1amp3mkvcpkieyggdk.mp4)  
 
 
 A feature-rich **YouTube Clone** application built using the **MERNstack** (MongoDB, Express.js, React, and Node.js)
