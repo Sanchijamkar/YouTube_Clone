@@ -39,6 +39,20 @@ while the frontend leverages **React** for building an interactive UI.
 ✨ Features
 ----------
 
+### 🎨 Modern UI Layouts
+* # Homepage
+* **Header**: Includes the search bar and a login/signup button for unauthenticated users.
+* **Sidebar**: A collapsible menu displaying categories and filters.
+* **Video Grid**: Displays video cards with thumbnails, titles, channel names, and views.
+*  # Video Player Page
+* **Video Player**: Streams the selected video.
+* **Details**: Shows video title, description, channel name, likes, and dislikes.
+* **Comments**: Users can add, edit, and delete comments.
+* # Channel Page
+* **Channel Management**: Allows users to create, edit, or delete videos within their channel.
+* **Subscribers and Stats**: Displays channel-specific details like banners, subscriber count, and video lists.
+
+
 ### 📹 Core Functionalities
 
 *   **User Authentication**: Secure sign-up and sign-in using JWT.
