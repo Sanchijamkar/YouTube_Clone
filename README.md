@@ -2,6 +2,7 @@
 ================
 
 # 🚀 Demo Video  
+* **Click on Image**: To Watch Video.
 
 [<img src="https://wallpaperaccess.com/full/8901669.jpg" alt="Watch the Demo" style="width:600px;">](https://res.cloudinary.com/dh3mvhvpp/video/upload/v1737743374/jg1amp3mkvcpkieyggdk.mp4)
 
