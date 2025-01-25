@@ -1,13 +1,15 @@
-﻿# MERN-Stack-YouTube-Clone
+﻿# MERN-Stack-YouTube-Clone  
 🎥 YouTube Clone
 🚀 Demo Video
-Check out a quick demo of our YouTube Clone in action:
 
 🌟 Overview
-A feature-rich YouTube Clone application built using the MERN Stack (MongoDB, Express.js, React, and Node.js) with cloud storage and secure authentication. This project replicates core YouTube functionalities, such as uploading, streaming, and interacting with video content, while providing a modern, responsive user experience.
+A feature-rich YouTube Clone application built using the MERN Stack (MongoDB, Express.js, React, and Node.js)
+with cloud storage and secure authentication. This project replicates core YouTube functionalities, such as
+uploading, streaming, and interacting with video content, while providing a modern, responsive user experience.
 
 ✨ Features
 📹 Core Functionalities
+
 User Authentication:
 
 Secure registration and login using JWT.
@@ -51,12 +53,14 @@ bash
 Copy
 Edit
 git clone https://github.com/Ayushgreat/MERN-Stack-YouTube-Clone.git  
+
 Install Dependencies
 Navigate to the respective directories and install the required packages:
 
 bash
 Copy
 Edit
+
 # Frontend  
 cd frontend  
 npm install  
@@ -75,8 +79,11 @@ bash
 Copy
 Edit
 http://localhost:5173  
+
 🎨 Modern UI Layouts
+
 Homepage
+
 Header: Includes the search bar and a login/signup button for unauthenticated users.
 Sidebar: A collapsible menu displaying categories and filters.
 Video Grid: Displays video cards with thumbnails, titles, channel names, and views.
