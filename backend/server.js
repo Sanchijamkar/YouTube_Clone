@@ -16,7 +16,9 @@ dotenv.config();
 // Database connection function
 const connectDB = async () => {
     try {
-        const connectionInstance = await mongoose.connect(`mongodb://127.0.0.1:27017/YouTube`);
+        const connectionInstance = await mongoose.connect(
+            "mongodb+srv://namdeoayush62:8TWzmWlW664T0Rwb@youtube-database.cryk5.mongodb.net/YouTube?retryWrites=true&w=majority"
+          );
         console.log(`MongoDB connected Successfully `);
     } catch (error) {
         console.error("Error connecting to database:", error);
