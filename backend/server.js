@@ -17,7 +17,7 @@ dotenv.config();
 const connectDB = async () => {
     try {
         const connectionInstance = await mongoose.connect(
-            "mongodb+srv://namdeoayush62:8TWzmWlW664T0Rwb@youtube-database.cryk5.mongodb.net/YouTube?retryWrites=true&w=majority"
+            `mongodb+srv://namdeoayush62:8TWzmWlW664T0Rwb@youtube-database.cryk5.mongodb.net/YouTube`
           );
         console.log(`MongoDB connected Successfully `);
     } catch (error) {
