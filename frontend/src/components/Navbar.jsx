@@ -1,212 +1,166 @@
 // Import necessary dependencies and components
-import { useState, useEffect } from 'react';
-import React from 'react';
-import logo from '../assets/YouTube_Logo_2017.svg.png'; 
-import { Link, useNavigate } from "react-router-dom"; 
-import { logout } from '../Redux/slice/authSlice'; 
-import { useDispatch, useSelector } from "react-redux"; 
-import { getUserData } from '../Redux/slice/authSlice'; 
-import { FiSearch, FiMenu } from "react-icons/fi"; 
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'; 
-import CreateChannel from './CreateChannel'; 
-import { useToast } from "../hooks/use-toast"; 
-import { RiVideoUploadLine } from "react-icons/ri"; 
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, getUserData } from "../Redux/slice/authSlice";
+import logo from "../assets/YouTube_Logo_2017.svg.png";
+import { FiSearch, FiMenu } from "react-icons/fi";
+import { RiVideoUploadLine } from "react-icons/ri";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import CreateChannel from "./CreateChannel";
+import { useToast } from "../hooks/use-toast";
 
-// Navbar component definition
 function Navbar({ openChange, onSearch }) {
-  // State hooks
-  const [dropdownVisible, setDropdownVisible] = useState(false); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [searchTerm, setSearchTerm] = useState(""); 
-  
-  // Redux hooks to interact with the store
-  const dispatch = useDispatch(); 
-  const navigate = useNavigate(); 
-  const authStatus = useSelector((state) => state.auth.status); 
-  const userdata = useSelector((state) => state.auth.user); 
-  const { toast } = useToast(); 
+  // State management
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Toggle sidebar visibility
-  const toggleSidebar = () => {
-    openChange();
-  };
+  // Redux hooks
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status: authStatus, user: userdata } = useSelector((state) => state.auth);
+  const { toast } = useToast();
 
-  // Toggle the visibility of the user dropdown menu
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+  // Handlers
+  const toggleSidebar = () => openChange();
+  const toggleDropdown = () => setDropdownVisible((prev) => !prev);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  // Open the modal for creating a channel
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // Close the modal for creating a channel
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Handle search input change and trigger search functionality
   const handleSearchChange = (e) => {
     const value = e.target.value;
-    setSearchTerm(value); // Update the search term state
-    onSearch(value); // Trigger the search functionality passed as a prop
+    setSearchTerm(value);
+    onSearch(value); // Pass the search term to the parent component
   };
 
-  // Handle upload button click to navigate to the video upload page
   const handleUploadClick = () => {
-    navigate("/your_channel/upload_video", { state: { openModal: true } }); // Pass state to open upload modal
+    navigate("/your_channel/upload_video", { state: { openModal: true } });
   };
 
-  // Handle user sign out by dispatching logout action
   const handleSignOut = () => {
-    dispatch(logout()); // Dispatch logout action
-    console.log("Logout clicked");
+    dispatch(logout());
     toast({
-      title: "You have successfully logged out", // Show a toast notification
+      title: "You have successfully logged out.",
     });
+    navigate("/"); // Redirect to Sign In page after logout
   };
 
-  // Effect hook to fetch user data whenever the user changes
   useEffect(() => {
     if (userdata?._id) {
-      dispatch(getUserData(userdata._id)); // Fetch user data from the API or store if user ID exists
+      dispatch(getUserData(userdata._id));
     }
-  }, [userdata, dispatch]); // Dependency on userdata, so it refetches when userdata changes
+  }, [userdata, dispatch]);
 
   return (
     <>
-      {/* Navbar container */}
-      <nav className="fixed z-30 w-full border-none bg-white border-b border-gray-200">
-        <div className="px-1 py-1 lg:px-5 lg:pl-3">
-          <div className="flex items-center justify-between">
-            {/* Left side: Logo and sidebar toggle */}
-            <div className="flex items-center justify-start">
-              <button
-                onClick={toggleSidebar} // Toggle sidebar visibility
-                className="fixed mt-2 lg:top-2 left-5 z-40 flex items-center justify-center w-6 h-6 bg-white rounded-full  hover:bg-gray-100 group"
-              >
-                <FiMenu className="w-6 h-6" /> {/* Menu icon */}
-              </button>
+      <nav className="fixed z-30 w-full bg-white shadow-sm border-b border-gray-200">
+        <div className="px-4 py-2 lg:px-6 flex items-center justify-between">
+          {/* Left: Logo and Sidebar Toggle */}
+          <div className="flex items-center">
+            <button
+              onClick={toggleSidebar}
+              className="p-2 rounded-md hover:bg-gray-100 lg:hidden"
+            >
+              <FiMenu className="w-6 h-6" />
+            </button>
+            <Link to="/" className="ml-4">
+              <img src={logo} alt="YouTube Logo" className="h-5" />
+            </Link>
+          </div>
 
-              {/* Logo */}
-              <a className="flex mt-2 ml-14 md:mr-24" href="/">
-                <img src={logo} className="mr-2.5 h-5" alt="YouTube Logo" />
-              </a>
+          {/* Center: Search Bar */}
+          <div className="hidden lg:block lg:w-96">
+            <form className="relative">
+              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Search"
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg pl-10 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </form>
+          </div>
 
-              {/* Search bar (hidden on small screens) */}
-              <form
-                action="#"
-                method="get"
-                className="hidden lg:block lg:pl-3.5"
-                style={{ marginLeft: 300 }}
-              >
-                <label htmlFor="topbar-search" className="sr-only">Search</label>
-                <div className="relative mt-1 lg:w-96">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                   <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    style={{ height: 34 }}
-                    name="search"
-                    id="topbar-search"
-                    value={searchTerm}
-                    onChange={handleSearchChange} // Trigger search when input changes
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5"
-                    placeholder="Search"
-                  />
-                </div>
-              </form>
-            </div>
-
-            {/* Right side: User menu */}
+          {/* Right: User Actions */}
+          <div className="flex items-center space-x-4">
             {authStatus ? (
-              <div className="relative ml-auto lg:ml-4">
-                <div className="flex items-center space-x-3"> {/* Flex container to align icons */}
-                  {/* Conditional rendering for upload icon */}
-                  {userdata?.hasChannel && (
-                    <button
-                      onClick={handleUploadClick} // Navigate to upload page
-                      className="flex items-center"
-                    >
-                      <RiVideoUploadLine className="w-6 h-6 text-gray-700 mr-5" />
-                    </button>
-                  )}
+              <>
+                {/* Upload Icon */}
+                {userdata?.hasChannel && (
+                  <button onClick={handleUploadClick} className="hover:text-gray-700">
+                    <RiVideoUploadLine className="w-6 h-6" />
+                  </button>
+                )}
 
-                  {/* User profile icon and dropdown */}
+                {/* User Dropdown */}
+                <div className="relative">
                   <button
-                    type="button"
-                    className="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300"
-                    id="user-menu-button-2"
-                    aria-expanded={dropdownVisible}
-                    onClick={toggleDropdown} // Toggle the dropdown menu
+                    onClick={toggleDropdown}
+                    className="flex items-center rounded-full focus:outline-none"
                   >
-                    <span className="sr-only">Open user menu</span>
-                    {userdata ? (
+                    {userdata?.avatar ? (
                       <img
+                        src={userdata.avatar}
+                        alt="User Avatar"
                         className="w-8 h-8 rounded-full"
-                        src={userdata.avatar} 
-                        alt="User"
                       />
                     ) : (
-                      <div>Loading...</div> 
+                      <AccountCircleOutlinedIcon className="w-8 h-8 text-gray-500" />
                     )}
                   </button>
-                </div>
-
-                {/* Dropdown menu */}
-                {dropdownVisible && (
-                  <div className="absolute right-0 z-50 mt-2 w-48 text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg" id="dropdown-2">
-                    {userdata ? (
+                  {dropdownVisible && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                       <div className="px-4 py-3">
-                        <p className="text-sm text-gray-900">{userdata.name}</p>
-                        <p className="text-sm font-medium text-gray-900 truncate">{userdata.email}</p>
+                        <p className="text-sm font-semibold">{userdata?.name}</p>
+                        <p className="text-sm text-gray-500">{userdata?.email}</p>
                       </div>
-                    ) : (
-                      <div>Loading user data...</div> 
-                    )}
-
-                    {/* Dropdown items */}
-                    <ul className="py-1">
-                      {/* Dashboard or Create Channel option */}
-                      {userdata?.hasChannel ? (
+                      <ul className="py-1">
+                        {userdata?.hasChannel ? (
+                          <li>
+                            <Link
+                              to="/your_channel"
+                              className="block px-4 py-2 text-sm hover:bg-gray-100"
+                            >
+                              Your Channel
+                            </Link>
+                          </li>
+                        ) : (
+                          <li>
+                            <button
+                              onClick={openModal}
+                              className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                            >
+                              Create Channel
+                            </button>
+                          </li>
+                        )}
                         <li>
-                          <Link to="/your_channel" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Profile
+                          <Link
+                            to="/settings"
+                            className="block px-4 py-2 text-sm hover:bg-gray-100"
+                          >
+                            Settings
                           </Link>
                         </li>
-                      ) : (
                         <li>
                           <button
-                            onClick={openModal} 
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={handleSignOut}
+                            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                           >
-                            Create Channel
+                            Logout
                           </button>
                         </li>
-                      )}
-
-                      {/* Settings and Sign out */}
-                      <li>
-                        <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          Settings
-                        </Link>
-                      </li>
-                      <li>
-                        <button onClick={handleSignOut} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          Logout
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </>
             ) : (
-              // If user is not authenticated, show Sign In button
-              <Link to="/login" className="text-blue-500 no-underline">
-                <button className="px-3 py-1 border border-blue-500 text-blue-500 rounded font-medium flex items-center gap-1">
-                  <AccountCircleOutlinedIcon />
+              <Link to="/login">
+                <button className="px-4 py-2 text-sm text-blue-500 border border-blue-500 rounded-lg hover:bg-blue-50">
+                  <AccountCircleOutlinedIcon className="mr-2" />
                   SIGN IN
                 </button>
               </Link>
@@ -215,10 +169,10 @@ function Navbar({ openChange, onSearch }) {
         </div>
       </nav>
 
-      {/* Modal Component for creating a channel */}
+      {/* Create Channel Modal */}
       <CreateChannel isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
 }
 
-export default Navbar; 
+export default Navbar;
