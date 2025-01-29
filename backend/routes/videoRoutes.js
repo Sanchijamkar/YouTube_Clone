@@ -21,5 +21,8 @@ router.route("/delete/:id").delete(deleteVideoById)
 router.route("/incrementView/:id").put(viewsIncrement)
 router.route('/like').post(likeVideo);
 router.route('/removelike').post(removeLikeVideo);
-router.route('/update/:id').put(upload.fields([{ name: "banner", maxCount: 1 }, { name: "avatar", maxCount: 1 }]), updateVideo);
+router.route('/update/:id').put(upload.fields([
+  { name: "thumbnail", maxCount: 1 },
+  { name: "videoFile", maxCount: 1 }
+]), updateVideo);
 export default router
